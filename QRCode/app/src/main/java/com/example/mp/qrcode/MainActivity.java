@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,13 +49,14 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
     {
         /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
-        builder.setMessage(result.getText());
+        builder.setMessage("Aguarde carregamento de descrição");
         AlertDialog alertDialog = builder.create();
         alertDialog.show();*/
         setContentView(R.layout.activity_main);
         myTextViewResult = (TextView)findViewById(R.id.txResult);
         //myTextViewResult.setText("Resultado: " + result.getText());
         myTextViewResult.setText("Resultado: carregando descrição");
+        myTextViewResult.announceForAccessibility("Aguarde. Buscando descrição");
 
         new DownloadDescription().execute(result.getText());
 
@@ -110,7 +112,7 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
 
         protected void onPostExecute(String result) {
             myTextViewResult.setText(result);
-
+            myTextViewResult.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
         }
     }
 
