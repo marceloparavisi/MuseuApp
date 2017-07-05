@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.mp.qrcode.MainActivity">
--->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -18,12 +11,44 @@
         android:layout_height="wrap_content"
         android:text="Ler QR Code"
         android:onClick="onClick" />
+
+
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:text="Código escrito em braille" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/qrCodeDigitado"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="Buscar descrição"
+            android:onClick="onClickDigitado"/>
+
+
+    </LinearLayout>
+
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txResult"
         android:text="Resultado: "/>
     </LinearLayout>
-<!--
-</android.support.constraint.ConstraintLayout>
-    -->

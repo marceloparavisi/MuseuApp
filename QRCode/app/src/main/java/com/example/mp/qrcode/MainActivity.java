@@ -1,12 +1,15 @@
 package com.example.mp.qrcode;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class MainActivity extends Activity implements ZXingScannerView.ResultHandler {
 
     TextView myTextViewResult;
+    EditText myEditTextQRcodeDigitado;
     private ZXingScannerView mScannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,20 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
         mScannerView.startCamera();
     }
 
+    public void  onClickDigitado(View v)
+    {
+
+        myEditTextQRcodeDigitado = (EditText) findViewById(R.id.qrCodeDigitado);
+        myTextViewResult = (TextView)findViewById(R.id.txResult);
+        myTextViewResult.announceForAccessibility("Aguarde. Buscando descrição");
+        new DownloadDescription().execute(myEditTextQRcodeDigitado.getText().toString());
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+
     }
 
     @Override
@@ -52,6 +66,10 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
         builder.setMessage("Aguarde carregamento de descrição");
         AlertDialog alertDialog = builder.create();
         alertDialog.show();*/
+
+        Vibrator rr = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        long milliseconds = 500;
+        rr.vibrate(milliseconds);
         setContentView(R.layout.activity_main);
         myTextViewResult = (TextView)findViewById(R.id.txResult);
         //myTextViewResult.setText("Resultado: " + result.getText());
@@ -98,6 +116,7 @@ public class MainActivity extends Activity implements ZXingScannerView.ResultHan
                 if(resultSet.next())
                 {
                     String test = resultSet.getString("Description");
+
                     return test;
 
                 }
